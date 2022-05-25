@@ -1,6 +1,7 @@
 package com.mandeep.noteapplication
 
 import android.app.ActivityOptions
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -24,6 +25,14 @@ class LoginScreen : AppCompatActivity()
 
 
 
+        val sharedPreferencess =getSharedPreferences("isLoginShrdPrf", Context.MODE_PRIVATE)
+        val editor = sharedPreferencess.edit()
+
+        if(sharedPreferencess.getBoolean("isLogin",false))
+        {
+            startActivity(Intent(this,HomeScreen::class.java))
+            finish()
+        }
 
         binding.loginButton.setOnClickListener {
             val emailorphone =binding.phoneLogin.editText?.text.toString()
@@ -45,6 +54,10 @@ class LoginScreen : AppCompatActivity()
                      if(encryptedpassword.equals(password))
                      {
                          binding.passwordLogin.isErrorEnabled = false
+
+                         editor.putBoolean("isLogin",true)
+                         editor.apply()
+
                          startActivity(Intent(this,HomeScreen::class.java))
                          finish()
                      }else{
