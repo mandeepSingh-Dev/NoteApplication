@@ -19,4 +19,5 @@ interface DaoInterface{
     @Query("SELECT * FROM Notes WHERE id Like :idd")
     fun readNote(idd:Int):Notes
 
+
 }

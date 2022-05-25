@@ -12,11 +12,11 @@ data class Notes(
     @ColumnInfo(name = "description")
     val description:String,
 
-    @ColumnInfo(name = "imageList")
-    private val image:ArrayList<String>?
+    @ColumnInfo(name = "joinId")
+    val joinId:String,
  )
 {
-    constructor(title:String,description: String):this(title,description,null)
+   // constructor(title:String,description: String):this(title,description,null)
 
     @PrimaryKey(autoGenerate = true)
     var id:Int=0

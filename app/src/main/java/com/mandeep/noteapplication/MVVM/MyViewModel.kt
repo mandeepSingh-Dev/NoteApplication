@@ -14,11 +14,18 @@ class MyViewModel @Inject constructor(val mainRepositry: MainRepositry): ViewMod
 
     var listNotes:LiveData<List<Notes>>?=null
 
+
     init {
         viewModelScope.launch {
             listNotes = MutableLiveData()
+
             val list = mainRepositry.readNotes()
            listNotes = list
+            /*val list2 =mainRepositry.readimages()
+            listimage = list2*/
+
+           // val imagee = mainRepositry.readsingleimage()
+           // image = imagee
         }
     }
 
@@ -27,5 +34,4 @@ class MyViewModel @Inject constructor(val mainRepositry: MainRepositry): ViewMod
            mainRepositry.insertNote(notes)
        }
     }
-
 }

@@ -1,7 +1,7 @@
 package com.mandeep.noteapplication.MVVM
 
 import android.content.Context
-import android.graphics.Bitmap
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +9,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.mandeep.noteapplication.DetailsScreen
+import com.mandeep.noteapplication.HomeScreen
 import com.mandeep.noteapplication.R
 import com.mandeep.noteapplication.Room.Notes
+import java.io.FileInputStream
 
-class MyAdapter(val context: Context, val noteList:List<Notes>): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(val context: Context, val noteList:List<Notes>,val myViewModel: MyViewModel,val activity: HomeScreen): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
 
 
@@ -26,6 +29,29 @@ class MyAdapter(val context: Context, val noteList:List<Notes>): RecyclerView.Ad
         val note = noteList.get(position)
         holder.titleTextView.text = note.title
         holder.descriptionTextView.text = note.description
+
+
+       // CoroutineScope(Dispatchers.IO).launch {
+        try {
+            val filedir = context.getExternalFilesDir(note.joinId)
+
+            var ipstrm = FileInputStream(filedir?.listFiles()?.get(0))
+            val bitmap = BitmapFactory.decodeStream(ipstrm)
+
+            holder.imageview.setImageBitmap(bitmap)
+        }catch (e:Exception){}
+
+
+        holder.itemView.setOnClickListener {
+            val intent = Intent(context,  DetailsScreen::class.java)
+            intent.putExtra("JOIN_ID",note.joinId)
+            intent.putExtra("TITLE",note.title)
+            intent.putExtra("DESCRIPTION",note.description)
+
+            context.startActivity(intent)
+        }
+
+
 
         //val byteArray = note.byte
        /* if(byteArray!=null) {
