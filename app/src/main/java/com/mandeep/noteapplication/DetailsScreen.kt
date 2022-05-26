@@ -3,11 +3,14 @@ package com.mandeep.noteapplication
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.mandeep.noteapplication.MVVM.MyViewModel
 import com.mandeep.noteapplication.databinding.DetailsScreenActivityBinding
 import com.mandeep.noteapplication.MVVM.GridAdpaterr
@@ -15,6 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.FileInputStream
 
 @AndroidEntryPoint
@@ -46,20 +50,29 @@ class DetailsScreen : AppCompatActivity()
 CoroutineScope(Dispatchers.IO).launch {
     join_Id?.let {
         try {
-
             val filedir = getExternalFilesDir(it)
             val imagesfileList = filedir?.listFiles()
 
-            imagesfileList?.forEach {
+            if(imagesfileList?.isNotEmpty()!!){
+                withContext(Dispatchers.Main) {
+                    binding.detailProgressBar.visibility = View.VISIBLE
+                }
+            imagesfileList.forEach {
                 var ipstrm = FileInputStream(it)
                 val bitmap = BitmapFactory.decodeStream(ipstrm)
                 bitmapList.add(bitmap)
             }
               CoroutineScope(Dispatchers.Main).launch {
+                  binding.detailProgressBar.visibility = View.GONE
                   val adapter = GridAdpaterr(this@DetailsScreen, bitmapList)
-                  binding.recyclerViewGrid.layoutManager = GridLayoutManager(this@DetailsScreen, 3)
+                  binding.recyclerViewGrid.setHasFixedSize(true)
+                  binding.recyclerViewGrid.layoutManager = StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL)
                   binding.recyclerViewGrid.adapter = adapter
               }
+            }
+            else{
+                binding.detailProgressBar.visibility = View.GONE
+            }
         } catch (e: Exception) {
         }
     }

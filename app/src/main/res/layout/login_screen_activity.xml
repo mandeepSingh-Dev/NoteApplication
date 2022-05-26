@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="@dimen/linearloginform"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent">
@@ -106,7 +106,7 @@
                     android:textColor="#BF360C"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline1"
                     android:textSize="20sp"
-                    android:layout_marginTop="150dp"
+                    android:layout_marginTop="@dimen/logbuttonmargin"
                     app:strokeWidth="1dp"
                     app:strokeColor="@color/black"
                     app:cornerRadius="4dp"

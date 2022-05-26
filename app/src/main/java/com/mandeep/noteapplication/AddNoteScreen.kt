@@ -10,6 +10,8 @@ import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.GridLayoutManager
+import com.mandeep.noteapplication.MVVM.GridAdpaterr
 import com.mandeep.noteapplication.MVVM.MainRepositry
 import com.mandeep.noteapplication.MVVM.MyViewModel
 import com.mandeep.noteapplication.Room.Notes
@@ -18,6 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -102,13 +105,22 @@ class AddNoteScreen : AppCompatActivity()
 
             if(it.isNotEmpty()) {
 
-                CoroutineScope(Dispatchers.IO).launch {
-                    it.forEach {
-                        val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(it))
-                         bitmapList.add(bitmap)
+                try {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        it.forEach {
+                            val bitmap =
+                                BitmapFactory.decodeStream(contentResolver.openInputStream(it))
+                            bitmapList.add(bitmap)
+                        }
+                        withContext(Dispatchers.Main) {
+                            val adapter = GridAdpaterr(this@AddNoteScreen, bitmapList)
+                            binding.recyclerViewGrid2.layoutManager = GridLayoutManager(this@AddNoteScreen, 3)
+                            binding.recyclerViewGrid2.adapter = adapter
+
+                        }
                     }
 
-                }
+                }catch (e:Exception){}
             }
 
         })

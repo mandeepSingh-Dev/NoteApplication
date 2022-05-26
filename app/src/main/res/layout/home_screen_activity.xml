@@ -14,6 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:text="@string/all_notes"
+        android:textColor="@color/black"
         android:gravity="start"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline1"
         android:textSize="45sp"

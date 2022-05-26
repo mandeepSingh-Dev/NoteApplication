@@ -4,13 +4,14 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/NoteApplication/app/src/main/res/drawable/image_shape.xml" value="0.1365" />
-        <entry key="..\:/NoteApplication/app/src/main/res/layout/add_note_screen_activity.xml" value="0.2" />
-        <entry key="..\:/NoteApplication/app/src/main/res/layout/details_screen_activity.xml" value="0.23802083333333332" />
-        <entry key="..\:/NoteApplication/app/src/main/res/layout/home_screen_activity.xml" value="0.23802083333333332" />
-        <entry key="..\:/NoteApplication/app/src/main/res/layout/image_item.xml" value="0.23802083333333332" />
-        <entry key="..\:/NoteApplication/app/src/main/res/layout/login_screen_activity.xml" value="0.23802083333333332" />
-        <entry key="..\:/NoteApplication/app/src/main/res/layout/note_item.xml" value="0.23802083333333332" />
-        <entry key="..\:/NoteApplication/app/src/main/res/layout/sign_up_screen_activity.xml" value="0.23802083333333332" />
+        <entry key="..\:/NoteApplication/app/src/main/res/drawable/shape_image.xml" value="0.135" />
+        <entry key="..\:/NoteApplication/app/src/main/res/layout/add_note_screen_activity.xml" value="0.72" />
+        <entry key="..\:/NoteApplication/app/src/main/res/layout/details_screen_activity.xml" value="0.72" />
+        <entry key="..\:/NoteApplication/app/src/main/res/layout/home_screen_activity.xml" value="0.8800000000000001" />
+        <entry key="..\:/NoteApplication/app/src/main/res/layout/image_item.xml" value="1.0" />
+        <entry key="..\:/NoteApplication/app/src/main/res/layout/login_screen_activity.xml" value="0.72" />
+        <entry key="..\:/NoteApplication/app/src/main/res/layout/note_item.xml" value="0.8800000000000001" />
+        <entry key="..\:/NoteApplication/app/src/main/res/layout/sign_up_screen_activity.xml" value="0.536" />
       </map>
     </option>
   </component>
