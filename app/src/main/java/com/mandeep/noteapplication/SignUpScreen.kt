@@ -9,14 +9,13 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import androidx.security.crypto.MasterKeys
 import com.mandeep.noteapplication.databinding.SignUpScreenActivityBinding
 
 
 class SignUpScreen : AppCompatActivity()
 {
     private lateinit var binding: SignUpScreenActivityBinding
-     var name:String =""
+    var name:String =""
     lateinit var phone:String
     lateinit var email:String
     lateinit var password:String
@@ -54,6 +53,10 @@ class SignUpScreen : AppCompatActivity()
         }
     }
 
+
+    fun pp(name:String):Boolean{
+        return name.equals("mandeep")
+    }
     private  fun emailValidate(email:String):Boolean{
 
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
@@ -77,7 +80,7 @@ class SignUpScreen : AppCompatActivity()
         }
     }
 
-    private  fun passwordValidate(password:String, name:String):Boolean{
+    private fun passwordValidate(password:String, name:String):Boolean{
 
         val stringbuilder= StringBuilder()
         Toasty.message(this,password.isEmpty().toString())
@@ -137,7 +140,7 @@ class SignUpScreen : AppCompatActivity()
         }
     }
 
-    fun store_encrypt_password(password:String){
+    private fun store_encrypt_password(password:String){
 
        val masterkey =  MasterKey.Builder(this).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
       //  val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)

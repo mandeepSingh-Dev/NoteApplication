@@ -1,5 +1,6 @@
 package com.mandeep.noteapplication.Room
 
+import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -14,6 +15,9 @@ data class Notes(
 
     @ColumnInfo(name = "joinId")
     val joinId:String,
+
+    @ColumnInfo(name = "singleBitmap")
+    val singleBitmap:Bitmap
  )
 {
    // constructor(title:String,description: String):this(title,description,null)

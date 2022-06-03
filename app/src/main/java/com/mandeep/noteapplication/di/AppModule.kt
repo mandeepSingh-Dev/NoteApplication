@@ -16,7 +16,16 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class AppModule {
 
-     var databaseName = "Notes_Database"
+    var databaseName = "Notes_Database"
+
+    lateinit var context: Context
+
+    @Provides
+    fun provideContext(@ApplicationContext context:Context):Context{
+        this.context = context
+        return context
+    }
+
 
     @Singleton
     @Provides

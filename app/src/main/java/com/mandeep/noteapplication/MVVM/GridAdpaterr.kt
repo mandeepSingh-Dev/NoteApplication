@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.mandeep.noteapplication.R
 
@@ -15,6 +16,7 @@ class GridAdpaterr(val context: Context, val arrayList:ArrayList<Bitmap>):Recycl
 
 
     class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
+        val constrintlayout = itemView.findViewById<ConstraintLayout>(R.id.constraintlayout)
         val imageview:ImageView = itemView.findViewById(R.id.imagevview)
     }
 
@@ -26,7 +28,14 @@ class GridAdpaterr(val context: Context, val arrayList:ArrayList<Bitmap>):Recycl
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val imagestring  = arrayList.get(position)
+
+        holder.imageview.layoutParams.width = imagestring.width
+       // holder.imageview.layoutParams.height = imagestring.height
+      //  holder.itemView.layoutParams.width = imagestring.width
+        holder.constrintlayout.layoutParams.height = imagestring.height
+
         holder.imageview.setImageBitmap(imagestring)
+
     }
 
     override fun getItemCount(): Int {
