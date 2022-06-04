@@ -1,7 +1,6 @@
 package com.mandeep.noteapplication
 
 import android.app.ActivityOptions
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -57,7 +56,7 @@ class SignUpScreen : AppCompatActivity()
     fun pp(name:String):Boolean{
         return name.equals("mandeep")
     }
-    private  fun emailValidate(email:String):Boolean{
+      fun emailValidate(email:String):Boolean{
 
         val emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+"
         val regex = Regex(emailPattern)
@@ -80,10 +79,9 @@ class SignUpScreen : AppCompatActivity()
         }
     }
 
-    private fun passwordValidate(password:String, name:String):Boolean{
+     fun passwordValidate(password:String, name:String):Boolean{
 
         val stringbuilder= StringBuilder()
-        Toasty.message(this,password.isEmpty().toString())
         if(password.isEmpty())
         {
             stringbuilder.append("please enter password.")
@@ -128,7 +126,7 @@ class SignUpScreen : AppCompatActivity()
                }
     }
 
-    private fun phoneValidate(phone:String):Boolean{
+     fun phoneValidate(phone:String):Boolean{
         if(phone.length<10 || phone.length>10)
         {
             binding.phoneinputLayout.error = "InAppropriate Phone Number\nplease enter 10 digit phone number"
@@ -146,7 +144,7 @@ class SignUpScreen : AppCompatActivity()
       //  val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
         val sharedPreferences = EncryptedSharedPreferences.create(
            this,
-            "HELLO",
+            getString(R.string.EncryptShrdPref),
             masterkey,
             EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM

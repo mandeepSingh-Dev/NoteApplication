@@ -17,10 +17,10 @@ data class Notes(
     val joinId:String,
 
     @ColumnInfo(name = "singleBitmap")
-    val singleBitmap:Bitmap
+    val singleBitmap:Bitmap?
  )
 {
-   // constructor(title:String,description: String):this(title,description,null)
+    constructor(title:String,description: String,joinId: String):this(title,description,joinId,null)
 
     @PrimaryKey(autoGenerate = true)
     var id:Int=0

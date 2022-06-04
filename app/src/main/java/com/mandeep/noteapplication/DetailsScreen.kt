@@ -1,26 +1,18 @@
 package com.mandeep.noteapplication
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.mandeep.noteapplication.MVVM.*
 import com.mandeep.noteapplication.databinding.DetailsScreenActivityBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.io.FileInputStream
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -45,6 +37,10 @@ class DetailsScreen : AppCompatActivity()
 
         supportActionBar?.hide()
 
+        //set emoji
+        val unicode = 0x270F
+        val emoji = String(Character.toChars(unicode))
+        binding.headlineNoteDetail.text = getString(R.string.note)+" "+emoji
 
         arraylist = ArrayList()
         val join_Id = intent.getStringExtra("JOIN_ID")
@@ -58,12 +54,28 @@ class DetailsScreen : AppCompatActivity()
             join_Id?.let { MyViewModel2Factory(assistedFactory, it) }!!
         }
 
-myViewModel2.image.observe(this, Observer {
-    bitmapList.add(it.image)
+     myViewModel2.image.observe(this, Observer {
+
+         binding.progressbar.isEnabled = true
+         binding.progressbar.visibility = View.VISIBLE
+
+         it.forEach {
+            bitmapList.add(it.image)
+        }
+         binding.progressbar.isEnabled = false
+         binding.progressbar.visibility = View.GONE
 
     val adapter = GridAdpaterr(this,bitmapList)
-    binding.recyclerViewGrid.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
-    binding.recyclerViewGrid.adapter = adapter
+    Log.d("eifnwe",bitmapList.size.toString())
+    if(bitmapList.size==1)
+    {
+        binding.recyclerViewGrid.layoutManager = LinearLayoutManager(this)
+        binding.recyclerViewGrid.adapter = adapter
+    }else{
+        binding.recyclerViewGrid.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
+        binding.recyclerViewGrid.adapter = adapter
+    }
+
 })
         /* myViewModel.listImages?.observe(this, Observer {
 

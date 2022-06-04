@@ -2,23 +2,18 @@ package com.mandeep.noteapplication.MVVM
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.mandeep.noteapplication.DetailsScreen
-import com.mandeep.noteapplication.HomeScreen
 import com.mandeep.noteapplication.R
-import com.mandeep.noteapplication.Room.Images
 import com.mandeep.noteapplication.Room.Notes
-import java.io.FileInputStream
 
-class MyAdapter(val context: Context, val noteList:List<Notes>,val imageList: ArrayList<Images>/*val myViewModel: MyViewModel,val activity: HomeScreen*/): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
+class MyAdapter(val context: Context, val noteList:List<Notes>/*,val imageList: ArrayList<Images>val myViewModel: MyViewModel,val activity: HomeScreen*/): RecyclerView.Adapter<MyAdapter.MyViewHolder>() {
 
 
 
@@ -41,8 +36,12 @@ class MyAdapter(val context: Context, val noteList:List<Notes>,val imageList: Ar
 //
 //            var ipstrm = FileInputStream(filedir?.listFiles()?.get(0))
 //            val bitmap = BitmapFactory.decodeStream(ipstrm)
-
-            holder.imageview.setImageBitmap(note.singleBitmap)
+                 if(note.singleBitmap==null) {
+                     holder.imageview.setImageResource(R.drawable.ic_baseline_person_24)
+                 }
+            else {
+                     holder.imageview.setImageBitmap(note.singleBitmap)
+                 }
         }catch (e:Exception){}
 
 
@@ -53,6 +52,7 @@ class MyAdapter(val context: Context, val noteList:List<Notes>,val imageList: Ar
             intent.putExtra("DESCRIPTION",note.description)
 
             context.startActivity(intent)
+
         }
 
 

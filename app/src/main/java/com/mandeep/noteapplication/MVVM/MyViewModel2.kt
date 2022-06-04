@@ -10,7 +10,7 @@ import dagger.assisted.AssistedInject
 
 class MyViewModel2 @AssistedInject constructor( mainRepositry: MainRepositry, val context: Context, @Assisted val joinId:String):ViewModel() {
 
-     var image: LiveData<Images> = MutableLiveData()
+     var image: LiveData<List<Images>> = MutableLiveData()
 
     init{
         image  = mainRepositry.getSingleImage(joinId)

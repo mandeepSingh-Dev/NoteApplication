@@ -6,9 +6,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.imageview.ShapeableImageView
 import com.mandeep.noteapplication.R
 
 class GridAdpaterr(val context: Context, val arrayList:ArrayList<Bitmap>):RecyclerView.Adapter<GridAdpaterr.MyViewHolder>(){
@@ -17,7 +17,7 @@ class GridAdpaterr(val context: Context, val arrayList:ArrayList<Bitmap>):Recycl
 
     class MyViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
         val constrintlayout = itemView.findViewById<ConstraintLayout>(R.id.constraintlayout)
-        val imageview:ImageView = itemView.findViewById(R.id.imagevview)
+        val imageview:ShapeableImageView = itemView.findViewById(R.id.imagevview)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -27,14 +27,23 @@ class GridAdpaterr(val context: Context, val arrayList:ArrayList<Bitmap>):Recycl
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val imagestring  = arrayList.get(position)
+        val imageBitmap  = arrayList.get(position)
 
-        holder.imageview.layoutParams.width = imagestring.width
+        holder.imageview.layoutParams.width = imageBitmap.width
        // holder.imageview.layoutParams.height = imagestring.height
       //  holder.itemView.layoutParams.width = imagestring.width
-        holder.constrintlayout.layoutParams.height = imagestring.height
+        holder.constrintlayout.layoutParams.height = imageBitmap.height
 
-        holder.imageview.setImageBitmap(imagestring)
+        //this is for set image in full width height when only singal image in list.
+        if(arrayList.size == 1)
+        {
+            holder.itemView.layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT
+            holder.itemView.layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+        }
+
+
+
+        holder.imageview.setImageBitmap(imageBitmap)
 
     }
 

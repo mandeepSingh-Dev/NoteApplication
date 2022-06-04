@@ -25,9 +25,9 @@ class LoginScreen : AppCompatActivity()
 
 
 
+        //when user is loggedIn loginscreen will never open and Direct Navigate to HomeScreen.
         val sharedPreferencess =getSharedPreferences("isLoginShrdPrf", Context.MODE_PRIVATE)
         val editor = sharedPreferencess.edit()
-
         if(sharedPreferencess.getBoolean("isLogin",false))
         {
             startActivity(Intent(this,HomeScreen::class.java))
@@ -38,11 +38,12 @@ class LoginScreen : AppCompatActivity()
             val emailorphone =binding.phoneLogin.editText?.text.toString()
             val password =binding.passwordLogin.editText?.text.toString()
             try {
+                //Getting Encrypted password frmo EncryptedSharedPrefernce.
                 val masterkey =  MasterKey.Builder(this).setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
 
                 val sharedPreferences = EncryptedSharedPreferences.create(
                     this,
-                    "HELLO",
+                    getString(R.string.EncryptShrdPref),
                     masterkey,
                     EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
                     EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM

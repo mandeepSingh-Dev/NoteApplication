@@ -4,13 +4,18 @@
         <!-- Primary brand color. -->
         <item name="colorPrimary">#FFFFFF</item>
         <item name="colorPrimaryVariant">#311B92</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorOnPrimary">#A36161</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">#0D47A1</item>
         <item name="colorSecondaryVariant">#006064</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">#F57F17</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="roundedCorners" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">20dp</item>
     </style>
 </resources>

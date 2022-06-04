@@ -1,23 +1,24 @@
 package com.mandeep.noteapplication
 
+import android.R
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.core.graphics.BitmapCompat
+import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.mandeep.noteapplication.MVVM.GridAdpaterr
 import com.mandeep.noteapplication.MVVM.MainRepositry
-import com.mandeep.noteapplication.MVVM.MyViewModel
 import com.mandeep.noteapplication.Room.Images
 import com.mandeep.noteapplication.Room.Notes
 import com.mandeep.noteapplication.databinding.AddNoteScreenActivityBinding
@@ -26,10 +27,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -53,24 +50,14 @@ class AddNoteScreen : AppCompatActivity()
         binding = AddNoteScreenActivityBinding.inflate(LayoutInflater.from(this))
         setContentView(binding.root)
 
+
+    //  singleBitmap = BitmapFactory.decodeResource(resources, R.drawable.ic_dialog_alert)
+
+
         bitmapp = ArrayList()
         imagesources = ArrayList()
 
         supportActionBar?.hide()
-
-
-
-       /* myViewModel.listImages?.observe(this, Observer {
-
-            it.forEach {
-                bitmapList.add(it.image)
-            }
-            val adapter = GridAdpaterr(this@AddNoteScreen,bitmapList )
-            binding.recyclerViewGrid2.layoutManager = GridLayoutManager(this@AddNoteScreen, 3)
-            binding.recyclerViewGrid2.adapter = adapter
-        })*/
-
-
 
         binding.addNoteButton.setOnClickListener {
 
@@ -78,46 +65,26 @@ class AddNoteScreen : AppCompatActivity()
             val title = binding.addTitle.text.toString()
             val description = binding.addDescription.text.toString()
 
-            CoroutineScope(Dispatchers.Main).launch{
-
-                /*val intent = Intent(this@AddNoteScreen, HomeScreen::class.java)
-                //intent.putExtra("JOIN_ID", joinId)
-                startActivity(intent)
-                        finishAfterTransition()*/
-            }
-
 
             if( title.length > 5 && description.length > 100) {
-
-                /*if (bitmapList.isNotEmpty()) {
-                    val dir = getExternalFilesDir(joinId)
-                    if (!dir?.exists()!!) {
-                        dir.mkdir()
-                    }
-                    bitmapList.forEach {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            var file = File(dir, System.currentTimeMillis().toString() + ".jpg")
-                            val outptstrm = FileOutputStream(file)
-                            it.compress(Bitmap.CompressFormat.JPEG, 100, outptstrm)
-                        }
-
-                    }
-                }*/
-
 
                 CoroutineScope(Dispatchers.Main).launch {
 
                   //join Id is basically worked as Foreign Key for both Notes and Images table
-                    singleBitmap?.let {
-                        mainRepositry.insertNote(Notes(title, description, joinId,it))
+                    if(singleBitmap!=null) {
+                        singleBitmap?.let { mainRepositry.insertNote(Notes(title, description, joinId, it)) }
+                    }else{
+                        mainRepositry.insertNote(Notes(title, description, joinId))
                     }
+
                     bitmapList.forEach {
                         mainRepositry.insertImage(Images(joinId,it))
                     }
                     val intent = Intent(this@AddNoteScreen, HomeScreen::class.java)
                     intent.putExtra("JOIN_ID", joinId)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent)
-                    finishAfterTransition()
+                   finish()
                 }
             }
             else{
@@ -133,8 +100,6 @@ class AddNoteScreen : AppCompatActivity()
         binding.addphotofloatbutton.setOnClickListener {
             launcher.launch("image/*")
         }
-
-
     }
 
 
@@ -144,14 +109,17 @@ class AddNoteScreen : AppCompatActivity()
 
             if(it.isNotEmpty()) {
                 try {
+                    binding.progressbar.isEnabled = true
+                    binding.progressbar.visibility = View.VISIBLE
+
+                    singleBitmap = reducesizeofBitmap(it[0])
                     CoroutineScope(Dispatchers.IO).launch {
-                        if(it.size<10)
+                        if(it.size < 10)
                         {
                             //this bitmap is just for put one bitmap image to
                                 //set in Notes table so that viewmodel can easily fetch
                                     //single bitmap from Notes Table rathen list of bitmap list
                                         //from Images Table
-                            singleBitmap = reducesizeofBitmap(it[0])
                             //to set bitmap list(upto 10 images) for single user in Images Table
                             it.forEach {
                                 val bitmapD =reducesizeofBitmap(it)
@@ -162,40 +130,30 @@ class AddNoteScreen : AppCompatActivity()
                         }
                         else {
                             for (i in 0..9) {
-
-                                // it.forEach {
-                                /* val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(it))
-                            val options = BitmapFactory.Options()
-                            options.inJustDecodeBounds = true
-                            BitmapFactory.decodeStream(contentResolver.openInputStream(it),null,options)
-                            Log.d("8h3g3",options.outHeight.toString())
-                            Log.d("8h3g3",options.outWidth.toString())
-
-                            options.inSampleSize = 5
-                            options.inJustDecodeBounds = false
-                          val bitmaprr =  BitmapFactory.decodeStream(contentResolver.openInputStream(it),null,options)
-                            Log.d("8h3g3",options.outHeight.toString())
-                            Log.d("8h3g3",options.outWidth.toString())
-                            Log.d("8h3g3",options.inBitmap.toString()+"NULL")
-
-                            bitmaprr?.let{
-                                bitmapList.add(it)
-                               Log.d("eorjeor",bitmaprr.byteCount.toString())
-                                Log.d("eorjeor",bitmap.byteCount.toString())
-
-                            }*/
                                 //   val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(it))
-
-                                val bitmapD = reducesizeofBitmap(it.get(i))
+                                val bitmapD = reducesizeofBitmap(it[i])
                                 bitmapD?.let {
                                     bitmapList.add(it)
                                 }
                             }
                         }
                         withContext(Dispatchers.Main){
+
+                            binding.progressbar.isEnabled = false
+                            binding.progressbar.visibility = View.GONE
+
                             val adapter = GridAdpaterr(this@AddNoteScreen, bitmapList)
-                            binding.recyclerViewGrid2.layoutManager = StaggeredGridLayoutManager(2, LinearLayoutManager.VERTICAL)
-                            binding.recyclerViewGrid2.adapter = adapter
+                            if(bitmapList.size==1)
+                            {
+                                binding.recyclerViewGrid2.layoutManager = LinearLayoutManager(this@AddNoteScreen)
+                                binding.recyclerViewGrid2.adapter = adapter
+                            }else{
+                                binding.recyclerViewGrid2.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
+                                binding.recyclerViewGrid2.adapter = adapter
+                            }
+
+                          /*  binding.recyclerViewGrid2.layoutManager = GridLayoutManager(this@AddNoteScreen,2)
+                            binding.recyclerViewGrid2.adapter = adapter*/
                         }
                       /*  withContext(Dispatchers.Main) {
                             val adapter = GridAdpaterr(this@AddNoteScreen, bitmapList)
@@ -210,9 +168,6 @@ class AddNoteScreen : AppCompatActivity()
             }
 
         })
-
-
-    // val myViewModel: MyViewModel by viewModels()
 
     fun reducesizeofBitmap(uri: Uri): Bitmap? {
         val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
@@ -230,14 +185,13 @@ class AddNoteScreen : AppCompatActivity()
         val imageWidth: Int = options.outWidth
         Log.d("49gtj4g",imageWidth.toString())
         Log.d("49gtj4g",imageHeight.toString())
-//        val imageType: String = options.outMimeType
 
         val sampleSize = calculateInSampleSize(options,150,150)
 
         options.inSampleSize = sampleSize - 2
         options.inJustDecodeBounds = false
 
-        var bitmapdecoded = BitmapFactory.decodeStream(contentResolver.openInputStream(uri),null,options)
+        val bitmapdecoded = BitmapFactory.decodeStream(contentResolver.openInputStream(uri),null,options)
 
 
             Log.d("ef38fhn3",bitmapdecoded?.byteCount.toString()+"  withencode")
@@ -245,11 +199,19 @@ class AddNoteScreen : AppCompatActivity()
             Log.d("fkndfd",bitmapdecoded?.width.toString())
 
          // val bitmappp=  Bitmap.createScaledBitmap(bitmapdecoded!!,imageWidth,imageHeight,false)
+
         /*Log.d("ef38fhn3",bitmappp?.byteCount.toString()+"  scaledBitmap")
         Log.d("fieinfe",bitmappp?.height.toString()+"scaledBitmap")
         Log.d("fkndfd",bitmappp?.width.toString()+"scaledBitmap")*/
 
-     return bitmapdecoded
+        /*val scfds = RoundedBitmapDrawableFactory.create(resources, bitmapdecoded)
+        scfds.cornerRadius = 20f
+        val bitmaaap =scfds.bitmap
+*/
+
+
+        return bitmapdecoded
+        //return bitmaaap
     }
     fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
         // Raw height and width of image
@@ -269,6 +231,10 @@ class AddNoteScreen : AppCompatActivity()
         }
        Log.d("398tht3g",inSampleSize.toString())
         return inSampleSize
+    }
+
+    override fun onNavigateUp(): Boolean {
+        return super.onNavigateUp()
     }
 
 

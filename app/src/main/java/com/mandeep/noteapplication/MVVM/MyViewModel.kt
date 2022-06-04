@@ -36,10 +36,4 @@ class MyViewModel @Inject constructor(val mainRepositry: MainRepositry): ViewMod
            // image = imagee
         }
     }
-
-    fun insertNote(notes: Notes){
-       viewModelScope.launch {
-           mainRepositry.insertNote(notes)
-       }
-    }
 }

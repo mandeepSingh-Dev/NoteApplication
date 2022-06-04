@@ -21,7 +21,7 @@ class MainRepositry @Inject constructor(private val daoInterface:DaoInterface)
 
     fun getImages():LiveData<List<Images>> = daoInterface.getImages()
 
-    fun getSingleImage(id:String): LiveData<Images> = daoInterface.getSingleImage(id)
+    fun getSingleImage(id:String): LiveData<List<Images>> = daoInterface.getSingleImage(id)
 
 
 }

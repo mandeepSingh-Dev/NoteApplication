@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/nightmode"
     tools:context=".LoginScreen">
 
     <TextView
@@ -14,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:text="@string/login_screen"
-        android:textColor="@color/black"
+        android:textColor="@color/blackandWhite"
         android:gravity="start"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline1"
         android:textSize="45sp"
@@ -103,7 +104,7 @@
                     android:paddingBottom="7dp"
                     android:layout_gravity="center"
                     android:text="@string/login_screen"
-                    android:textColor="#BF360C"
+                    android:textColor="@color/blackandWhite"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline1"
                     android:textSize="20sp"
                     android:layout_marginTop="@dimen/logbuttonmargin"
@@ -123,8 +124,8 @@
                     android:layout_gravity="center"
                     android:paddingTop="6dp"
                     android:paddingBottom="6dp"
-                    android:textColor="#311B92"
                     android:text="@string/signup_screen"
+                    android:textColor="@color/blackandWhite"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Headline1"
                     android:textSize="20sp"
                     android:layout_marginTop="10dp"

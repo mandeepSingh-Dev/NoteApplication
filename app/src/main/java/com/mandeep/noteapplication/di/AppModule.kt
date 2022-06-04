@@ -2,7 +2,6 @@ package com.mandeep.noteapplication.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.mandeep.noteapplication.Room.MyRoom
 import dagger.Module
 import dagger.Provides

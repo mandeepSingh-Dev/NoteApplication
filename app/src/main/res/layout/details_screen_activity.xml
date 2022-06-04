@@ -4,35 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/nightmode"
     tools:context=".DetailsScreen">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
+        <TextView
+            android:id="@+id/headlineNoteDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:fontFamily="@font/baloo_bhaijaan"
+            android:text="@string/note"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline1"
+            android:textColor="@color/blackandWhite"
+            android:textSize="32sp"
+            app:layout_constraintBottom_toTopOf="@id/nestedScrollviewDetail"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollviewDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+       app:layout_constraintTop_toBottomOf="@id/headlineNoteDetail"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
 
-            <ProgressBar
-                android:id="@+id/detailProgressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+            >
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerViewGrid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="9dp"
+                android:layout_marginRight="9dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"/>
+            <ProgressBar
+                android:id="@+id/progressbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone"
+                app:layout_constraintTop_toTopOf="@id/recyclerViewGrid"
+                app:layout_constraintLeft_toLeftOf="@id/recyclerViewGrid"
+                app:layout_constraintRight_toRightOf="@id/recyclerViewGrid"/>
 
             <TextView
                 android:id="@+id/detailscreenTitle"
@@ -44,7 +74,7 @@
 app:layout_constraintLeft_toLeftOf="parent"
                 android:text="Titlle"
                 android:textSize="30sp"
-                android:textColor="@color/black"/>
+                />
 
             <TextView
                 android:id="@+id/detailscreenDescription"
@@ -55,12 +85,13 @@ app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/detailscreenTitle"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:text="description"
                 android:textSize="20sp"
-                android:textColor="@color/black"/>
-
+                android:layout_marginBottom="40dp"
+/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
-
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

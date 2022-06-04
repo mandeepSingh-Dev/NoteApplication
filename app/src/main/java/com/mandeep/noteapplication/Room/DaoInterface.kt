@@ -1,12 +1,10 @@
 package com.mandeep.noteapplication.Room
 
-import android.graphics.Bitmap
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DaoInterface{
@@ -27,7 +25,7 @@ interface DaoInterface{
     fun getImages():LiveData<List<Images>>
 
     @Query(" SELECT * FROM IMAGES WHERE userId Like :id")
-    fun getSingleImage(id:String):LiveData<Images>
+    fun getSingleImage(id:String):LiveData<List<Images>>
 
 
 }

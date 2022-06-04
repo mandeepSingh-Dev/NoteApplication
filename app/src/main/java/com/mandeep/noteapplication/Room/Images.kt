@@ -16,5 +16,5 @@ data class Images(
 )
 {
     @PrimaryKey(autoGenerate = true)
-    var id:Int = 0;
+    var id:Int = 0
 }
